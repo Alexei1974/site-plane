@@ -17,13 +17,33 @@ const cteateMain = () => {
     return main;
 };
 
-const createFirsForm = () => {
+const createFirsForm = (data) => {
     const form = createElement('form', {
         className: 'field',
     });
+
+    const labelTour = createElement('label', {
+        className: 'field__label',
+        for: 'tour',
+        textContent: 'Выбрать тур',
+    });
+
+    const select = createElement('select', {
+        className: 'field__select',
+        id: 'tour',
+        name: 'tour',
+    });
+
+    const option = data.map(item => createElement('option', { 
+            value: item.id,
+            textContent: item.tour,      
+    }));
+
+    select.append(...option)
+
     const label = createElement('label', {
         className: 'field__label',
-        textContent: 'Укажите количество человек',
+        textContent: 'Укажите количество человек (max: 6)',
     });
     const input = createElement('input', {
         className: 'field__input',
@@ -41,20 +61,20 @@ const createFirsForm = () => {
         textContent: 'Подтвердить',
     });
     
-    form.append(label, input, button);
+    form.append(labelTour, select, label, input, button);
     return form;
 };
 
-const start = (app, title) => {
+const start = (app, title, data) => {
     const h1 = createTitle(title);
     const main = cteateMain();
-    const firsForm = createFirsForm();
+    const firsForm = createFirsForm(data);
 
     main.append(firsForm);
     app.append(h1, main);
 
     return {
-        main, firsForm
+        main, firsForm, h1,
     }
 };
 export default start;
